@@ -68,6 +68,8 @@ int main()
                 imprimir();
                 break;
             case 6:
+            ordenar();
+            imprimir();
                 break;
             case 7:
                 break;
@@ -166,3 +168,21 @@ void excluir(int valor)
         posicao--;
     }
 }
+void ordenar(){
+    int i, j, aux;
+    
+    for(i=0;i<posicao-1; i++){
+        
+        for(j=i+1;j<posicao;j++){
+       
+           if (lista[i] > lista[j]){
+                aux = lista[i];
+                lista[i] = lista[j];
+                lista[j] = aux;
+            }
+           
+        }
+    
+    }  
+}
+
