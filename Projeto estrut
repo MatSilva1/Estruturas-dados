@@ -1,0 +1,168 @@
+#include<stdio.h>
+#define TAMANHO 5
+
+// Variáveis
+int lista[TAMANHO];
+int posicao = 0;
+int opcao = 0;
+int numero = 0;
+int indice = 0;
+
+// Prototipação
+int menu();
+void imprimir();
+void adicionar(int);
+int quantidadeElementos();
+int buscarPorIndice(int);
+int buscarPorValor(int);
+void excluir(int);
+void ordenar();
+void expandir();
+
+int main()
+{
+    while(opcao != 7)
+    {
+        opcao = menu();
+        switch(opcao)
+        {
+            case 1:
+                printf("Digite o numero: ");
+                scanf("%d", &numero);
+                adicionar(numero);
+                imprimir();
+                break;
+            case 2:
+                printf("Quantidade de elementos: %d\n", quantidadeElementos());
+                break;
+            case 3:
+                printf("Digite a posicao: ");
+                scanf("%d", &indice);
+                numero = buscarPorIndice(indice);
+                if(numero == -1)
+                {
+                    printf("Indice invalido!\n");
+                }
+                else
+                {
+                    printf("O valor eh: %d\n", numero);
+                }
+                break;
+            case 4:
+                printf("Digite o valor: ");
+                scanf("%d", &numero);
+                indice = buscarPorValor(numero);
+                if(indice == -1)
+                {
+                    printf("Nao encontrei o dado.\n");
+                }
+                else
+                {
+                    printf("Encontrei no indice: %d\n", indice);
+                }
+                break;
+            case 5:
+                printf("Digite o numero: ");
+                scanf("%d", &numero);
+                excluir(numero);
+                imprimir();
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            default:
+                printf("Opcao invalida!\n");
+
+        }
+    }
+}
+
+int menu()
+{
+    int op;
+
+    printf("Menu\n");
+    printf("1 - Adicionar\n");
+    printf("2 - Quantidade de Elementos\n");
+    printf("3 - Buscar por Indice\n");
+    printf("4 - Buscar por Valor\n");
+    printf("5 - Excluir\n");
+    printf("6 - Ordenar\n");
+    printf("7 - Sair\n");
+
+    printf("Digite a sua opcao: ");
+    scanf("%d", &op);
+
+    return op;
+}
+
+void imprimir()
+{
+    int i;
+    for(i=0;i<posicao;i++)
+    {
+        printf("Lista[%d]->%d\n", i, lista[i]);
+    }
+}
+
+void adicionar(int numero)
+{
+    if(posicao==TAMANHO)
+    {
+        printf("Lista cheia!\n");
+    }
+    else
+    {
+        lista[posicao] = numero;
+        posicao++;
+    }
+}
+
+int quantidadeElementos()
+{
+    return posicao;
+}
+
+int buscarPorIndice(int indice)
+{
+    if(indice<0 || indice>=posicao)
+    {
+        return -1;
+    }
+    else
+    {
+        return lista[indice];
+    }
+}
+
+int buscarPorValor(int valor)
+{
+    int i;
+    for(i=0;i<posicao;i++)
+    {
+        if(lista[i] == valor)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void excluir(int valor)
+{
+    int i;
+    i = buscarPorValor(valor);
+    if(i == -1)
+    {
+        printf("Nao achei!\n");
+    }
+    else
+    {
+        for(;i<posicao-1;i++)
+        {
+            lista[i]=lista[i+1];
+        }
+        posicao--;
+    }
+}
