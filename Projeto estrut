@@ -1,8 +1,9 @@
 #include<stdio.h>
-#define TAMANHO 5
+#include<stdlib.h>
 
 // Variáveis
-int lista[TAMANHO];
+int *lista;
+int tamanho = 5;
 int posicao = 0;
 int opcao = 0;
 int numero = 0;
@@ -18,9 +19,11 @@ int buscarPorValor(int);
 void excluir(int);
 void ordenar();
 void expandir();
-
+void inicializar();
+void finalizar();
 int main()
 {
+    inicializar();
     while(opcao != 7)
     {
         opcao = menu();
@@ -68,6 +71,7 @@ int main()
                 imprimir();
                 break;
             case 6:
+            printf("Ordenando... \n");
             ordenar();
             imprimir();
                 break;
@@ -78,6 +82,10 @@ int main()
 
         }
     }
+
+    finalizar(); 
+    return 0;
+    
 }
 
 int menu()
@@ -110,9 +118,11 @@ void imprimir()
 
 void adicionar(int numero)
 {
-    if(posicao==TAMANHO)
+    if(posicao==tamanho)
     {
-        printf("Lista cheia!\n");
+        expandir();    
+        printf("Lista cheia, aumentando capacidade\n");
+        adicionar(numero);
     }
     else
     {
@@ -168,6 +178,7 @@ void excluir(int valor)
         posicao--;
     }
 }
+
 void ordenar(){
     int i, j, aux;
     
@@ -186,3 +197,44 @@ void ordenar(){
     }  
 }
 
+void expandir (){
+    
+    int novoTam = 0;
+    int *aux;
+    int i;
+    
+    printf("\n Expandindo...\n");
+    
+    novoTam = tamanho * 1.5;
+    
+    aux = malloc (novoTam*sizeof(int));
+    if(!aux){
+        
+        printf("Memoria cheia\n");
+        exit(-2);
+    }
+    
+    for (i=0; i<tamanho;i++){
+        aux[i] = lista[i];
+        
+    }
+    free(lista);
+    lista = aux;
+    
+    tamanho = novoTam;
+}
+
+void inicializar(){
+    
+ lista = malloc(tamanho*sizeof(int));
+ if(!lista){
+     printf("Sem memoria \n");
+     exit(-1);
+ }
+}
+
+void finalizar(){
+    
+    free(lista);
+    
+}
